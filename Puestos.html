@@ -2,7 +2,7 @@
 <html lang="es-ES">
 
 <head>
-    <title>Personas</title>
+    <title>Puestos</title>
     <meta charset="utf-8" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-xs-12">
 
-                <h1 class="jumbotron">Persona</h1>
+                <h1 class="jumbotron">Puestos</h1>
                 <br>
                 <a href="index.html">Personas<a/>
                     <br>
@@ -32,13 +32,7 @@
                                 <input id="idnew" type="number" class="form-control" required="TRUE" />
                             </th>
                             <th>
-                                <input id="nombrenew" type="text" class="form-control"  required="TRUE">
-                            </th>
-                            <th>
-                                <input id="apellidonew" type="text" class="form-control" />
-                            </th>
-                             <th>
-                                <input id="fechadenacimientonew" type="date" class="form-control" />
+                                <input id="puestonew" type="text" class="form-control"  required="TRUE">
                             </th>
                             <th>
                                 <button id="btn-edit" class="btn btn-default">Editar</button>
@@ -55,9 +49,7 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Fecha de nacimiento</th>
+                            <th>Puesto</th>
                             <th style="width:80px;">
 
                             </th>
@@ -67,13 +59,7 @@
                                 <input id="id" type="number" class="form-control" required="TRUE" />
                             </th>
                             <th>
-                                <input id="nombre" type="text" class="form-control"  required="TRUE">
-                            </th>
-                            <th>
-                                <input id="apellido" type="text" class="form-control" />
-                            </th>
-                             <th>
-                                <input id="fechadenacimiento" type="date" class="form-control" />
+                                <input id="puesto" type="text" class="form-control"  required="TRUE">
                             </th>
                             <th>
                                 <button id="btn-add" class="btn btn-default">Agregar</button>
@@ -92,114 +78,97 @@
 
     <script>
         window.onload = function () {
-            var localStorageKeyName = 'listPersonas';
-            getAllPersonas();
+            var localStorageKeyName = 'listPuestos';
+            getAllPuestos();
 
             document.querySelector("#btn-add").addEventListener('click', function () {
                 var id = document.getElementById("id"),
-                    nombre = document.getElementById("nombre"),
-                    apellido = document.getElementById("apellido"),
-                    fechadenacimiento = document.getElementById("fechadenacimiento");
-                var listPersonas = {
+                    puesto = document.getElementById("puesto");
+                var listPuestos = {
                     id: id.value,
-                    nombre: nombre.value,
-                    apellido: apellido.value,
-                    fechadenacimiento: fechadenacimiento.value,
+                    puesto: puesto.value,
                 };
 
                 // Clean data
                 id.value = '';
-                nombre.value = '';
-                apellido.value = '';
-                fechadenacimiento.value = '';
+                puesto.value = '';
 
                 // Append to my localStorage
-                insertPersonas(listPersonas);
+                insertPuestos(listPuestos);
             })
 
             document.querySelector("#btn-edit").addEventListener('click', function () {
                 var idnew = document.getElementById("idnew"),
-                    nombrenew = document.getElementById("nombrenew"),
-                    apellidonew = document.getElementById("apellidonew"),
-                    fechadenacimientonew = document.getElementById("fechadenacimientonew"),
+                    puestonew = document.getElementById("puestonew"),
+                   
                     index = document.getElementById("index");
-                var listPersonasu = {
+                var listPuestos = {
                     id: idnew.value,
-                    nombre: nombrenew.value,
-                    apellido: apellidonew.value,
-                    fechadenacimiento: fechadenacimientonew.value,
+                    puesto: puestonew.value,
                 };
 
-                var listPersonas = [];
-                listPersonas =listPersonasu;
 
                 // Clean data
                 idnew.value = '';
-                nombrenew.value = '';
-                apellidonew.value = '';
-                fechadenacimientonew.value = '';
+                puestonew.value = '';
 
- var listPersonasnew = [],
+ var listPuestosnew = [],
                     dataInLocalStorage = localStorage.getItem(localStorageKeyName);
-                listPersonasnew = JSON.parse(dataInLocalStorage);
-                listPersonasnew.splice(index, 1);
-                localStorage.setItem(localStorageKeyName, JSON.stringify(listPersonasnew));
-                insertPersonas(listPersonas);
-                getAllPersonas();
+                listPuestosnew = JSON.parse(dataInLocalStorage);
+                listPuestosnew.splice(index, 1);
+                localStorage.setItem(localStorageKeyName, JSON.stringify(listPuestosnew));
+                insertPuestos(listPuestos);
+                getAllPuestos();
 
                 
             })
 
-            function insertPersonas(obj) {
-                var listPersonas = [],
+            function insertPuestos(obj) {
+                var listPuestos = [],
                     dataInLocalStorage = localStorage.getItem(localStorageKeyName);
 
                 if (dataInLocalStorage !== null) {
-                    listPersonas = JSON.parse(dataInLocalStorage);
+                    listPuestos = JSON.parse(dataInLocalStorage);
                 }
-                listPersonas.push(obj);
-                localStorage.setItem(localStorageKeyName, JSON.stringify(listPersonas));
-                getAllPersonas();
+                listPuestos.push(obj);
+                localStorage.setItem(localStorageKeyName, JSON.stringify(listPuestos));
+                getAllPuestos();
             }
 
-            function getAllPersonas() {
-                var listPersonas = [],
+            function getAllPuestos() {
+                var listPuestos = [],
                     dataInLocalStorage = localStorage.getItem(localStorageKeyName),
                     gridBody = document.querySelector("#grid tbody");
 
                 if (dataInLocalStorage !== null) {
-                    listPersonas = JSON.parse(dataInLocalStorage);
+                    listPuestos = JSON.parse(dataInLocalStorage);
                 }
 
                 // Draw TR from TBODY
                 gridBody.innerHTML = '';
 
-                listPersonas.forEach(function (x, i) {
+                listPuestos.forEach(function (x, i) {
                     var tr = document.createElement("tr"),
                         tdId = document.createElement("td"),
-                        tdNombre = document.createElement("td"),
-                        tdApellido = document.createElement("td"),
-                        tdfechadenacimiento = document.createElement("td"),
+                        tdPuesto = document.createElement("td"),
                         tdRemove = document.createElement("td"),
                         tdUpdate = document.createElement("td"),
                         btnRemove = document.createElement("button");
                         btnUpdate = document.createElement("button");
 
                     tdId.innerHTML = x.id;
-                    tdNombre.innerHTML = x.nombre;
-                    tdApellido.innerHTML = x.apellido;
-                    tdfechadenacimiento.innerHTML = x.fechadenacimiento;
+                    tdPuesto.innerHTML = x.puesto;
 
                     btnRemove.textContent = 'Quitar';
                     btnRemove.className = 'btn btn-xs btn-danger';
                     btnRemove.addEventListener('click', function(){
-                        deletePersona(i);
+                        deletePuesto(i);
                     });
 
-                    btnUpdate.textContent = 'Obtener Persona';
+                    btnUpdate.textContent = 'Obtener Puesto';
                     btnUpdate.className = 'btn btn-xs btn-success';
                     btnUpdate.addEventListener('click', function(){
-                        UpdatePersona(i);
+                        UpdatePuesto(i);
                     });
 
                     tdRemove.appendChild(btnRemove);
@@ -207,9 +176,7 @@
                     tdUpdate.appendChild(btnUpdate);
 
                     tr.appendChild(tdId);
-                    tr.appendChild(tdNombre);
-                    tr.appendChild(tdApellido);
-                    tr.appendChild(tdfechadenacimiento);
+                    tr.appendChild(tdPuesto);
                     tr.appendChild(tdRemove);
                     tr.appendChild(tdUpdate);
 
@@ -217,25 +184,23 @@
                 });
             }
 
-            function UpdatePersona(index){
-                var listPersonas = [],
+            function UpdatePuesto(index){
+                var listPuesto = [],
                     dataInLocalStorage = localStorage.getItem(localStorageKeyName);
-                listPersonas = JSON.parse(dataInLocalStorage);
-                var persona = listPersonas[index];
+                listPuesto = JSON.parse(dataInLocalStorage);
+                var persona = listPuesto[index];
                 document.getElementById("idnew").value = persona.id;
-                document.getElementById("nombrenew").value = persona.nombre;
-                document.getElementById("apellidonew").value = persona.apellido;
-                document.getElementById("fechadenacimientonew").value = persona.fechadenacimiento;
+                document.getElementById("puestonew").value = persona.puesto;
                 document.getElementById("index").value = index;
             }
 
-            function deletePersona(index){
+            function deletePuesto(index){
                 var listPersonas = [],
                     dataInLocalStorage = localStorage.getItem(localStorageKeyName);
                 listPersonas = JSON.parse(dataInLocalStorage);
                 listPersonas.splice(index, 1);
                 localStorage.setItem(localStorageKeyName, JSON.stringify(listPersonas));
-                getAllPersonas();
+                getAllPuestos();
             }
         }
     </script>
